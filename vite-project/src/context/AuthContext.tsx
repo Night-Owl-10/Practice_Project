@@ -1,4 +1,5 @@
-import {createContext, useState, useEffect, ReactNode} from "react";
+import { createContext, useState, useEffect, ReactNode } from "react";
+import axios from "axios";
 
 type User = {
     _id: string;
@@ -18,10 +19,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
+
         const storedUser = localStorage.getItem("user");
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
+        if (!storedUser) return;
+
+        async function validateSession() {
+            try {
+                const response = await axios.get("http://localhost:5000/api/users/me", {
+                    withCredentials: true,
+                });
+                setUser(response.data.user);
+                localStorage.setItem("user", JSON.stringify(response.data.user));
+            } catch {
+
+                localStorage.removeItem("user");
+                setUser(null);
+            }
         }
+
+        validateSession();
     }, []);
 
     return (
