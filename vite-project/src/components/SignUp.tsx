@@ -35,7 +35,7 @@ function SignUp({ isSignUpOpen, setIsSignUpOpen }: SignUpProps) {
         data.append("file", img ? img[0] : "");
         data.append("upload_preset", "multi-app");
         try {
-            const response = await axios.post("https://api.cloudinary.com/v1_1/dru7e6cnq/image/upload", data)
+            const response = await axios.post(`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME}/image/upload`, data)
             const imageUrl = response.data.url
             setImageURL(imageUrl)
             setInfo({ ...info, avatar: imageUrl });
