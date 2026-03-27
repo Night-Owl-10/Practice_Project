@@ -7,7 +7,7 @@ import {
   DialogClose,
 } from "@/components/ui/Dialog"
 import { useState } from "react"
-import axios from "axios"
+import API from "../api/axios"
 import { toast } from "react-toastify";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
@@ -39,9 +39,10 @@ function SignIn({ isSignInOpen, setIsSignInOpen }: SignInProps) {
       return;
     }
     try {
-      const response = await axios.post("http://localhost:5000/api/users/login", logInInfo, { withCredentials: true });
+      const response = await API.post("/users/login", logInInfo);
       toast.success(response.data.message);
       localStorage.setItem("user", JSON.stringify(response.data.user));
+      localStorage.setItem("token", response.data.token);
       setUser(response.data.user);
       logInInfo.email = "";
       logInInfo.password = "";

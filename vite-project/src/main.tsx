@@ -22,15 +22,15 @@ const appRouter = createBrowserRouter([
         element: <Suspense fallback={<div className='flex justify-center items-center h-screen text-center text-2xl font-bold'>Loading...</div>}> <Home /></Suspense>
       },
       {
-        path: "/profile",
+        path: "profile",
         element: <Suspense fallback={<div className='flex justify-center items-center h-screen text-center text-2xl font-bold'>Loading...</div>}> <Profile /></Suspense>
       },
       {
-        path: "/weather",
+        path: "weather",
         element: <Suspense fallback={<div className='flex justify-center items-center h-screen text-center text-2xl font-bold'>Loading...</div>}> <Weather /></Suspense>
       },
       {
-        path: "/tictactoe",
+        path: "tictactoe",
         element: <Suspense fallback={<div className='flex justify-center items-center h-screen text-center text-2xl font-bold'>Loading...</div>}> <TicTacToe /></Suspense>
       }
     ],

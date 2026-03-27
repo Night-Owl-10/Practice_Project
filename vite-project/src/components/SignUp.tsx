@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/Dialog"
 import { useState } from "react"
 import axios from "axios"
+import API from "../api/axios"
 import { toast } from "react-toastify";
 import { Loader2 } from "lucide-react";
 
@@ -60,7 +61,7 @@ function SignUp({ isSignUpOpen, setIsSignUpOpen }: SignUpProps) {
         }
 
         try {
-            const response = await axios.post("http://localhost:5000/api/users/register", info, { withCredentials: true });
+            const response = await API.post("/users/register", info);
             toast.success(response.data.message);
             info.username = "";
             info.email = "";

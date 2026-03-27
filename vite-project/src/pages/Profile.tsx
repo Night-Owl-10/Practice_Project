@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import API from "../api/axios";
 import { toast } from "react-toastify";
 import { Edit, Check, Trash2, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -69,7 +70,7 @@ function Profile() {
       return;
     }
     try {
-      const response = await axios.put("http://localhost:5000/api/users/update", editedUser, { withCredentials: true })
+      const response = await API.put("/users/update", editedUser)
       if (response.status == 200) {
         localStorage.setItem("user", JSON.stringify(response.data));
         setUser(response.data);
@@ -82,9 +83,10 @@ function Profile() {
 
   async function handleDelete() {
     try {
-      const response = await axios.delete("http://localhost:5000/api/users/delete", { withCredentials: true })
+      const response = await API.delete("/users/delete")
       if (response.status == 200) {
         localStorage.removeItem("user");
+        localStorage.removeItem("token");
         setUser(null);
         toast.success("Account deleted successfully");
         navigate("/");

@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, ReactNode } from "react";
-import axios from "axios";
+import API from "../api/axios";
 
 type User = {
     _id: string;
@@ -25,9 +25,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         async function validateSession() {
             try {
-                const response = await axios.get("http://localhost:5000/api/users/me", {
-                    withCredentials: true,
-                });
+                const response = await API.get("/users/me");
                 setUser(response.data.user);
                 localStorage.setItem("user", JSON.stringify(response.data.user));
             } catch {

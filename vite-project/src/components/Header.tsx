@@ -3,7 +3,7 @@ import SignUp from "./SignUp";
 import { useState, useEffect } from "react"
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import axios from "axios";
+import API from "../api/axios";
 import { toast } from "react-toastify";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -30,9 +30,10 @@ function Header() {
   async function handleSignOut() {
 
     try {
-      const response = await axios.post("http://localhost:5000/api/users/logout", {}, { withCredentials: true });
+      const response = await API.post("/users/logout", {});
       toast.success(response.data.message);
       localStorage.removeItem("user");
+      localStorage.removeItem("token");
       setUser(null);
       window.location.reload();
     } catch (error) {

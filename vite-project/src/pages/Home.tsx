@@ -1,7 +1,7 @@
 import TaskList from "../components/TaskList"
 import { useState } from "react"
 import { toast } from "react-toastify"
-import axios from "axios"
+import API from "../api/axios"
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
@@ -61,7 +61,7 @@ function Home() {
       }
 
       if (editTask) {
-        const response = await axios.put(`http://localhost:5000/api/tasks/${editTask._id}`, { task: editTask.task, status: editTask.status }, { withCredentials: true })
+        const response = await API.put(`/tasks/${editTask._id}`, { task: editTask.task, status: editTask.status })
         if (response.status === 200) {
           toast.success("Task updated successfully");
           setEditTask(null);
@@ -70,7 +70,7 @@ function Home() {
           toast.error(response.data.message || "Error updating task");
         }
       } else {
-        const response = await axios.post('http://localhost:5000/api/tasks', { task, status }, { withCredentials: true })
+        const response = await API.post('/tasks', { task, status })
         if (response.status === 201) {
           toast.success("Task added successfully");
           setRefetch(prev => !prev);

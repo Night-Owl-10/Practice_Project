@@ -1,7 +1,7 @@
 import { Edit, Delete } from 'lucide-react'
 import clsx from 'clsx'
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import API from '../api/axios'
 import { toast } from 'react-toastify'
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
@@ -26,7 +26,7 @@ function TaskList({ setEditTask, refetch, setRefetch }: TaskListProps) {
   useEffect(() => {
     async function fetchTasks() {
       try {
-        const response = await axios.get('http://localhost:5000/api/tasks', { withCredentials: true });
+        const response = await API.get('/tasks');
         setTaskList(response.data);
       } catch (error) {
         console.error("Error fetching tasks:", error);
@@ -45,7 +45,7 @@ function TaskList({ setEditTask, refetch, setRefetch }: TaskListProps) {
 
   async function handleDelete(id: number) {
     try {
-      const response = await axios.delete(`http://localhost:5000/api/tasks/${id}`, { withCredentials: true });
+      const response = await API.delete(`/tasks/${id}`);
       if (response.status === 200) {
         toast.success("Task deleted successfully");
         setRefetch(prev => !prev);
